@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REVA Horizon | REVA University Student Showcase & Countdown</title>
-  <meta name="description" content="A clean, simple student project and event countdown showcase for REVA University.">
+  <title>REVA Horizon | Student Project Showcase & Event Countdown</title>
+  <meta name="description" content="An aesthetic Student Project & Innovation Showcase and Event Countdown Dashboard for REVA University.">
   
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,51 +20,117 @@
     
     <!-- Top Header -->
     <header class="header">
-      <div class="header-left">
-        <h1 class="logo-title">REVA <span class="logo-accent">Horizon</span></h1>
-        <p class="tagline">REVA University Student Showcase & Countdown</p>
+      <div class="header-brand">
+        <div class="brand-crest" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="logo-title">REVA <span class="logo-accent">Horizon</span></h1>
+          <p class="tagline">REVA University Student Showcase & Countdown</p>
+        </div>
       </div>
 
-      <div class="header-right">
+      <!-- Live Digital Clock Widget -->
+      <div class="live-clock" id="liveClock" title="Current Campus Time">
+        <span class="clock-pulse"></span>
+        <div class="clock-details">
+          <span class="clock-time" id="clockTime">00:00:00 AM</span>
+          <span class="clock-date" id="clockDate">Loading date...</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
         <!-- Search Bar -->
         <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
           <input 
             type="text" 
             id="searchInput" 
             placeholder="Search events, projects, venues..."
             aria-label="Search events"
           >
+          <button id="clearSearchBtn" class="clear-input-btn" title="Clear search" aria-label="Clear search" style="display: none;">&times;</button>
         </div>
 
         <!-- Add Event Button -->
-        <button id="openModalBtn" class="btn btn-primary">+ Add Event</button>
+        <button id="openModalBtn" class="btn btn-primary">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add Event</span>
+        </button>
       </div>
     </header>
 
-    <!-- Category Filter Buttons -->
+    <!-- Category Filter Bar -->
     <nav class="category-nav" aria-label="Category Filters">
-      <button class="cat-btn active" data-category="All">All</button>
-      <button class="cat-btn" data-category="Tech Projects">Tech Projects</button>
-      <button class="cat-btn" data-category="Hackathons">Hackathons</button>
-      <button class="cat-btn" data-category="Campus Events">Campus Events</button>
+      <button class="cat-btn active" data-category="All">
+        <span>All</span>
+        <span class="badge" id="badgeAll">0</span>
+      </button>
+      <button class="cat-btn" data-category="Tech Projects">
+        <span>Tech Projects</span>
+        <span class="badge" id="badgeTech">0</span>
+      </button>
+      <button class="cat-btn" data-category="Hackathons">
+        <span>Hackathons</span>
+        <span class="badge" id="badgeHack">0</span>
+      </button>
+      <button class="cat-btn" data-category="Campus Events">
+        <span>Campus Events</span>
+        <span class="badge" id="badgeCampus">0</span>
+      </button>
     </nav>
 
     <!-- Featured Hero Event Card -->
-    <section class="featured-section" aria-label="Featured Event">
+    <section class="featured-section" aria-label="Featured Event Showcase">
       <div class="featured-card" id="featuredCard">
-        <div class="featured-badge">Featured Event</div>
+        <div class="featured-top-row">
+          <div class="badge-group">
+            <span class="featured-badge">Featured Milestone</span>
+            <span class="category-tag" id="featuredCategory">Tech Projects</span>
+          </div>
+          <button class="remind-btn" id="featuredRemindBtn" aria-label="Set reminder for featured event">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span id="featuredRemindText">Remind Me</span>
+          </button>
+        </div>
         
         <div class="featured-body">
           <div class="featured-info">
-            <span class="category-tag" id="featuredCategory">Tech Projects</span>
-            <h2 class="featured-title" id="featuredTitle">REVA Tech Fest 2026</h2>
+            <h2 class="featured-title" id="featuredTitle">REVA Annual Innovation & Tech Fest 2026</h2>
             <p class="featured-desc" id="featuredDesc">
-              The flagship annual university symposium featuring cutting-edge student project expos, AI hackathons, robotics arenas, and keynote addresses.
+              The flagship annual university symposium featuring cutting-edge student project expos, AI hackathons, robotics arenas, and visionary faculty keynotes.
             </p>
             <div class="featured-meta">
-              <span id="featuredDate">November 15, 2026</span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span id="featuredDate">Loading date...</span>
+              </span>
               <span class="meta-dot">•</span>
-              <span id="featuredVenue">Kuvempu Auditorium, REVA Campus</span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span id="featuredVenue">Kuvempu Auditorium, REVA Campus</span>
+              </span>
             </div>
           </div>
 
@@ -92,7 +158,7 @@
     </section>
 
     <!-- Upcoming Events Grid -->
-    <section class="grid-section" aria-label="Upcoming Events">
+    <section class="grid-section" aria-label="Upcoming Events Directory">
       <div class="section-header">
         <h3 class="section-title">Upcoming Showcases & Events</h3>
         <span class="events-count" id="eventsCount">Showing all events</span>
@@ -103,17 +169,33 @@
         <!-- Rendered dynamically by script.js -->
       </div>
 
-      <!-- Empty State -->
+      <!-- Empty State & Quick Reset -->
       <div class="empty-state" id="emptyState" style="display: none;">
-        <p>No events found matching your search or category filter.</p>
-        <button class="btn btn-secondary" id="emptyResetBtn">View All Events</button>
+        <div class="empty-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h4 class="empty-title">No Matching Events Found</h4>
+        <p class="empty-desc">We couldn't find any student showcases or campus events matching your criteria.</p>
+        <button class="btn btn-secondary" id="emptyResetBtn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>Clear Filters & Reset</span>
+        </button>
       </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
       <p>© REVA Horizon — REVA University Student Innovation & Events Showcase</p>
-      <button id="resetSeedBtn" class="reset-link">Reset Sample Events</button>
+      <button id="resetSeedBtn" class="reset-link" title="Restore sample upcoming events">
+        Reset Sample Events
+      </button>
     </footer>
 
   </div>
@@ -122,24 +204,28 @@
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-card" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
       <div class="modal-header">
-        <h3 id="modalTitle">Add New Event</h3>
+        <div class="modal-title-group">
+          <h3 id="modalTitle">Add New Event or Project</h3>
+          <p class="modal-subtitle">Publish a new student milestone or campus event countdown</p>
+        </div>
         <button id="closeModalBtn" class="close-btn" aria-label="Close dialog">&times;</button>
       </div>
 
       <form id="addEventForm">
         <div class="form-group">
-          <label for="eventTitle">Event or Project Title *</label>
+          <label for="eventTitle">Event or Project Title <span class="required">*</span></label>
           <input 
             type="text" 
             id="eventTitle" 
-            placeholder="e.g. AI & Robotics Symposium" 
+            placeholder="e.g. Autonomous Robotics Arena 2026" 
             required
+            maxlength="80"
           >
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="eventCategory">Category *</label>
+            <label for="eventCategory">Category <span class="required">*</span></label>
             <select id="eventCategory" required>
               <option value="Tech Projects">Tech Projects</option>
               <option value="Hackathons">Hackathons</option>
@@ -148,7 +234,7 @@
           </div>
 
           <div class="form-group">
-            <label for="eventDate">Target Date & Time *</label>
+            <label for="eventDate">Target Date & Time <span class="required">*</span></label>
             <input 
               type="datetime-local" 
               id="eventDate" 
@@ -158,12 +244,13 @@
         </div>
 
         <div class="form-group">
-          <label for="eventVenue">Venue / Department *</label>
+          <label for="eventVenue">Venue / Department <span class="required">*</span></label>
           <input 
             type="text" 
             id="eventVenue" 
-            placeholder="e.g. C.V. Raman Block, REVA Campus" 
+            placeholder="e.g. C.V. Raman Block, Labs 3 & 4" 
             required
+            maxlength="90"
           >
         </div>
 
@@ -172,17 +259,21 @@
           <textarea 
             id="eventDesc" 
             rows="3" 
-            placeholder="Briefly describe what attendees can expect..."
+            placeholder="Briefly describe project goals, prizes, or what visitors can experience..."
+            maxlength="250"
           ></textarea>
         </div>
 
         <div class="modal-actions">
           <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Event</button>
+          <button type="submit" class="btn btn-primary">Save & Publish Event</button>
         </div>
       </form>
     </div>
   </div>
+
+  <!-- Toast Notification System (Bottom Right Floating) -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
   <!-- JavaScript File -->
   <script src="script.js"></script>
