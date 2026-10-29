@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REVA Horizon | REVA University Student Showcase & Countdown</title>
+  <meta name="description" content="A clean, simple student project and event countdown showcase for REVA University.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Main Container -->
+  <div class="container">
+    
+    <!-- Top Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1 class="logo-title">REVA <span class="logo-accent">Horizon</span></h1>
+        <p class="tagline">REVA University Student Showcase & Countdown</p>
+      </div>
+
+      <div class="header-right">
+        <!-- Search Bar -->
+        <div class="search-box">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search events, projects, venues..."
+            aria-label="Search events"
+          >
+        </div>
+
+        <!-- Add Event Button -->
+        <button id="openModalBtn" class="btn btn-primary">+ Add Event</button>
+      </div>
+    </header>
+
+    <!-- Category Filter Buttons -->
+    <nav class="category-nav" aria-label="Category Filters">
+      <button class="cat-btn active" data-category="All">All</button>
+      <button class="cat-btn" data-category="Tech Projects">Tech Projects</button>
+      <button class="cat-btn" data-category="Hackathons">Hackathons</button>
+      <button class="cat-btn" data-category="Campus Events">Campus Events</button>
+    </nav>
+
+    <!-- Featured Hero Event Card -->
+    <section class="featured-section" aria-label="Featured Event">
+      <div class="featured-card" id="featuredCard">
+        <div class="featured-badge">Featured Event</div>
+        
+        <div class="featured-body">
+          <div class="featured-info">
+            <span class="category-tag" id="featuredCategory">Tech Projects</span>
+            <h2 class="featured-title" id="featuredTitle">REVA Tech Fest 2026</h2>
+            <p class="featured-desc" id="featuredDesc">
+              The flagship annual university symposium featuring cutting-edge student project expos, AI hackathons, robotics arenas, and keynote addresses.
+            </p>
+            <div class="featured-meta">
+              <span id="featuredDate">November 15, 2026</span>
+              <span class="meta-dot">•</span>
+              <span id="featuredVenue">Kuvempu Auditorium, REVA Campus</span>
+            </div>
+          </div>
+
+          <!-- Featured Countdown Ticker -->
+          <div class="featured-countdown" id="featuredCountdown">
+            <div class="timer-box">
+              <span class="timer-number" id="featDays">00</span>
+              <span class="timer-label">Days</span>
+            </div>
+            <div class="timer-box">
+              <span class="timer-number" id="featHours">00</span>
+              <span class="timer-label">Hours</span>
+            </div>
+            <div class="timer-box">
+              <span class="timer-number" id="featMinutes">00</span>
+              <span class="timer-label">Minutes</span>
+            </div>
+            <div class="timer-box">
+              <span class="timer-number" id="featSeconds">00</span>
+              <span class="timer-label">Seconds</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming Events Grid -->
+    <section class="grid-section" aria-label="Upcoming Events">
+      <div class="section-header">
+        <h3 class="section-title">Upcoming Showcases & Events</h3>
+        <span class="events-count" id="eventsCount">Showing all events</span>
+      </div>
+
+      <!-- Cards Grid Container -->
+      <div class="events-grid" id="eventsGrid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <p>No events found matching your search or category filter.</p>
+        <button class="btn btn-secondary" id="emptyResetBtn">View All Events</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© REVA Horizon — REVA University Student Innovation & Events Showcase</p>
+      <button id="resetSeedBtn" class="reset-link">Reset Sample Events</button>
+    </footer>
+
+  </div>
+
+  <!-- Add Custom Event Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Event</h3>
+        <button id="closeModalBtn" class="close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="addEventForm">
+        <div class="form-group">
+          <label for="eventTitle">Event or Project Title *</label>
+          <input 
+            type="text" 
+            id="eventTitle" 
+            placeholder="e.g. AI & Robotics Symposium" 
+            required
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventCategory">Category *</label>
+            <select id="eventCategory" required>
+              <option value="Tech Projects">Tech Projects</option>
+              <option value="Hackathons">Hackathons</option>
+              <option value="Campus Events">Campus Events</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="eventDate">Target Date & Time *</label>
+            <input 
+              type="datetime-local" 
+              id="eventDate" 
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="eventVenue">Venue / Department *</label>
+          <input 
+            type="text" 
+            id="eventVenue" 
+            placeholder="e.g. C.V. Raman Block, REVA Campus" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="eventDesc">Short Description</label>
+          <textarea 
+            id="eventDesc" 
+            rows="3" 
+            placeholder="Briefly describe what attendees can expect..."
+          ></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
